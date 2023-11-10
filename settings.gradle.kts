@@ -13,5 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Github Repo Viewer"
+rootProject.name = "github_repo_viewer"
 include(":app")
+include(":data")
+include(":domain")
