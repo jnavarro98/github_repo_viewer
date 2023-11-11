@@ -1,8 +1,9 @@
 package com.janavarro.githubrepoviewer.ui.repolist.adapter
 
-import android.widget.AdapterView.OnItemClickListener
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.janavarro.domain.githubrepo.model.GithubRepo
 import com.janavarro.githubrepoviewer.R
 import com.janavarro.githubrepoviewer.databinding.ViewRepoItemBinding
@@ -13,18 +14,25 @@ class RepoViewHolder(
 
     fun onBind(
         item: GithubRepo,
-        action: (GithubRepo) -> Unit) {
+        action: (GithubRepo) -> Unit
+    ) {
         binding.apply {
             tvTitle.text = item.name
-            tvDescription.text = item.description
-            tvStars.text = item.stars.toString()
+            if (item.description?.isNotBlank() == true) {
+                tvDescription.text = item.description
+                tvDescription.visibility = View.VISIBLE
+            } else {
+                tvDescription.visibility = View.GONE
+            }
+            viewStars.tvValue.text = item.stars.toString()
             root.setOnClickListener {
                 action.invoke(item)
             }
             Glide.with(root.context)
                 .load(R.drawable.ic_star)
                 .fitCenter()
-                .into(ivStars)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(viewStars.ivIcon)
         }
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:name=".base.MyApplication"
+        android:name=".base.BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,13 +16,17 @@
         <activity
             android:name=".ui.repolist.activity.RepoListActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.GithubRepoViewer">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.repodetails.activity.RepoDetailsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.GithubRepoViewer">
         </activity>
     </application>
 
