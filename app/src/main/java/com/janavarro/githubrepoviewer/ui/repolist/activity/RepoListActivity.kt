@@ -61,7 +61,7 @@ class RepoListActivity : ComponentActivity(), RepoListView {
     override fun showProgress() {
         Glide.with(baseContext).asGif()
                 .load(R.raw.loading_gif)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
             viewStatus.tvMessage.visibility = View.GONE
@@ -82,7 +82,7 @@ class RepoListActivity : ComponentActivity(), RepoListView {
     private fun loadError(image: Int, message: String) {
         Glide.with(baseContext)
                 .load(image)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .fitCenter()
                 .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
