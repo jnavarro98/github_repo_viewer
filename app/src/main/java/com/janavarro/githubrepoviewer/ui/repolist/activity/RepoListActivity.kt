@@ -1,9 +1,12 @@
 package com.janavarro.githubrepoviewer.ui.repolist.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.janavarro.domain.githubrepo.model.GithubRepo
+import com.janavarro.githubrepoviewer.R
 import com.janavarro.githubrepoviewer.databinding.ActivityRepoListBinding
 import com.janavarro.githubrepoviewer.ui.repodetails.activity.RepoDetailsActivity
 import com.janavarro.githubrepoviewer.ui.repolist.adapter.RepoAdapter
@@ -29,7 +32,8 @@ class RepoListActivity : ComponentActivity(), RepoListView {
 
         presenter.view = this
         initRv()
-        presenter.getRepoList()
+        //TODO: Repo could be retrieved from user input
+        presenter.getRepoList("google")
     }
 
     private fun initRv() {
@@ -44,7 +48,49 @@ class RepoListActivity : ComponentActivity(), RepoListView {
         adapter.addItems(repos)
     }
 
-    //Only using parcelable data class when sending through intent to avoid extra mapping.
+    //TODO: Add a retry button, then we could hide the error
+    override fun showNetworkError() {
+        Glide.with(baseContext)
+            .load(R.drawable.network_error)
+            .fitCenter()
+            .into(binding.viewStatus.ivIcon)
+        binding.apply {
+            viewStatus.tvMessage.text = getString(R.string.network_error)
+            viewStatus.tvMessage.visibility = View.VISIBLE
+            viewStatus.root.visibility = View.VISIBLE
+        }
+    }
+
+    override fun showGenericError() {
+        Glide.with(baseContext)
+            .load(R.drawable.ic_generic_error)
+            .fitCenter()
+            .into(binding.viewStatus.ivIcon)
+        binding.apply {
+            viewStatus.tvMessage.text = getString(R.string.generic_error)
+            viewStatus.tvMessage.visibility = View.VISIBLE
+            viewStatus.root.visibility = View.VISIBLE
+        }
+    }
+
+    override fun showProgress() {
+        Glide.with(baseContext).asGif()
+            .load(R.raw.loading_gif)
+            .into(binding.viewStatus.ivIcon)
+        binding.apply {
+            viewStatus.tvMessage.visibility = View.GONE
+            viewStatus.root.visibility = View.VISIBLE
+        }
+    }
+
+    override fun hideProgress() {
+        binding.apply {
+            viewStatus.tvMessage.visibility = View.GONE
+            viewStatus.root.visibility = View.GONE
+        }
+    }
+
+    //Only using parcelable data class when sending through intent to avoid redundant mapping.
     private fun onItemClick(item: GithubRepo) {
         val intent = RepoDetailsActivity.newIntent(
             this, ParcelableGithubRepo(

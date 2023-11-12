@@ -63,8 +63,7 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
 
             }
         } else {
-            Toast.makeText(this, getString(R.string.error_repo_details),
-                Toast.LENGTH_LONG).show()
+            showGenericError()
             finish()
         }
     }
@@ -102,6 +101,18 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
             val intent = Intent(context, RepoDetailsActivity::class.java)
             intent.putExtra(EXTRA_GITHUB_REPO, githubRepo)
             return intent
+        }
+    }
+
+    override fun showGenericError() {
+        Glide.with(baseContext)
+            .load(R.drawable.ic_generic_error)
+            .fitCenter()
+            .into(binding.viewStatus.ivIcon)
+        binding.apply {
+            viewStatus.tvMessage.text = getString(R.string.generic_error)
+            viewStatus.tvMessage.visibility = View.VISIBLE
+            viewStatus.root.visibility = View.VISIBLE
         }
     }
 

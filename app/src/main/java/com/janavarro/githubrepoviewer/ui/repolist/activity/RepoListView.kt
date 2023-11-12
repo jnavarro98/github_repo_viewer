@@ -6,4 +6,9 @@ import com.janavarro.githubrepoviewer.base.BaseView
 interface RepoListView : BaseView {
 
     fun showRepos(repos: List<GithubRepo>)
+    fun showNetworkError()
+
+    fun showProgress()
+
+    fun hideProgress()
 }

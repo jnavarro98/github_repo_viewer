@@ -8,21 +8,31 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.UnknownHostException
 
 class RepoListPresenter(
     private val githubListInteractor: GithubListInteractor,
     private val uiDispatcher: CoroutineDispatcher = Dispatchers.Main,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : BasePresenter<RepoListView>() {
 
     private val uiScope = CoroutineScope(uiDispatcher)
-    fun getRepoList() {
+
+    //TODO: For pagination we would handle in the Recyclerview scroll event api calls to the github api with proper logic
+    fun getRepoList(repo: String) {
         uiScope.launch {
-            val response = reposByUsername("google")
-            if (!response.hasError && response.result != null) {
+            view?.showProgress()
+            val response = reposByUsername(repo)
+            if (response.isSuccessful()) {
                 response.result?.let { view?.showRepos(it) }
+                view?.hideProgress()
             } else {
-                view?.showError()
+                when(response.exception) {
+                    is UnknownHostException -> {
+                        view?.showNetworkError()
+                    }
+                    else -> view?.showGenericError()
+                }
             }
         }
     }
