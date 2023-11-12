@@ -31,7 +31,7 @@ class RepoViewHolder(
             Glide.with(root.context)
                     .load(R.drawable.ic_star)
                     .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                     .into(viewStars.ivIcon)
         }
     }

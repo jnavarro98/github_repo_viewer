@@ -41,7 +41,7 @@
     android:background="@drawable/background_views"
     android:padding="24dp"
     android:scrollbars="vertical"
-    app:layout_constraintBottom_toBottomOf="@+id/guidelineDescritpion"
+    app:layout_constraintBottom_toBottomOf="@+id/guidelineDescription"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/tvTitle"
@@ -52,13 +52,14 @@
     style="@style/MMedium"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginStart="20dp"
     android:scrollbars="vertical"
     android:textAlignment="textStart"
     app:layout_constraintEnd_toStartOf="@id/viewForks"
-    app:layout_constraintStart_toStartOf="@id/guidelineStartInfo"
-    app:layout_constraintTop_toTopOf="@id/guidelineDescritpion"
-    tools:text="Made with Koltin" />
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@id/guidelineDescription"
+    tools:text="Made with Kotlin" />
 
   <include
     android:id="@+id/viewForks"
@@ -68,7 +69,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
     app:layout_constraintEnd_toStartOf="@id/viewStars"
-    app:layout_constraintTop_toTopOf="@id/guidelineDescritpion" />
+    app:layout_constraintTop_toTopOf="@id/guidelineDescription" />
 
   <include
     android:id="@+id/viewStars"
@@ -78,7 +79,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginEnd="16dp"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="@id/guidelineDescritpion" />
+    app:layout_constraintTop_toTopOf="@id/guidelineDescription" />
 
   <TextView
     android:id="@+id/btOpenRepo"
@@ -103,14 +104,7 @@
     android:visibility="gone" />
 
   <androidx.constraintlayout.widget.Guideline
-    android:id="@+id/guidelineStartInfo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    app:layout_constraintGuide_percent="0.1" />
-
-  <androidx.constraintlayout.widget.Guideline
-    android:id="@+id/guidelineDescritpion"
+    android:id="@+id/guidelineDescription"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal"

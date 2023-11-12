@@ -52,7 +52,7 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
                 Glide.with(root.context)
                         .load(R.drawable.ic_back)
                         .fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                         .into(btBack)
                 tvTitle.text = githubRepo?.name
                 tvDescription.text = githubRepo?.description
@@ -60,13 +60,13 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
                 Glide.with(root.context)
                         .load(R.drawable.ic_fork)
                         .fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                         .into(viewForks.ivIcon)
                 viewStars.tvValue.text = githubRepo?.stars.toString()
                 Glide.with(root.context)
                         .load(R.drawable.ic_star)
                         .fitCenter()
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                         .into(viewStars.ivIcon)
                 if (githubRepo?.language != null) {
                     tvLanguage.text = getString(R.string.repo_language, githubRepo?.language)
