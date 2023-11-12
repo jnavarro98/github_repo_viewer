@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import com.bumptech.glide.Glide
@@ -18,6 +17,20 @@ import com.janavarro.githubrepoviewer.ui.repolist.model.ParcelableGithubRepo
 
 /*Not using presenter here since this activity has no logic other than showing data from intent*/
 class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
+
+    companion object {
+
+        const val EXTRA_GITHUB_REPO = "github_repo"
+
+        fun newIntent(
+            context: Context,
+            githubRepo: ParcelableGithubRepo
+        ): Intent {
+            val intent = Intent(context, RepoDetailsActivity::class.java)
+            intent.putExtra(EXTRA_GITHUB_REPO, githubRepo)
+            return intent
+        }
+    }
 
     private lateinit var binding: ActivityRepoDetailsBinding
 
@@ -74,8 +87,14 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
                 finish()
             }
             btOpenRepo.setOnClickListener {
-                val intent = CustomTabsIntent.Builder()
-                    .build()
+                val builder = CustomTabsIntent.Builder()
+                //Animation only works in some devices (ROM dependent)
+                builder.setStartAnimations(
+                    applicationContext,
+                    R.anim.slide_up_in,
+                    R.anim.slide_down_out
+                )
+                val intent = builder.build()
                 intent.launchUrl(this@RepoDetailsActivity, Uri.parse(githubRepo?.url))
             }
         }
@@ -90,30 +109,21 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
         }
     }
 
-    companion object {
-
-        const val EXTRA_GITHUB_REPO = "github_repo"
-
-        fun newIntent(
-            context: Context,
-            githubRepo: ParcelableGithubRepo
-        ): Intent {
-            val intent = Intent(context, RepoDetailsActivity::class.java)
-            intent.putExtra(EXTRA_GITHUB_REPO, githubRepo)
-            return intent
-        }
-    }
-
     override fun showGenericError() {
         Glide.with(baseContext)
             .load(R.drawable.ic_generic_error)
             .fitCenter()
-            .into(binding.viewStatus.ivIcon)
+            .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
             viewStatus.tvMessage.text = getString(R.string.generic_error)
             viewStatus.tvMessage.visibility = View.VISIBLE
             viewStatus.root.visibility = View.VISIBLE
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
     }
 
 }

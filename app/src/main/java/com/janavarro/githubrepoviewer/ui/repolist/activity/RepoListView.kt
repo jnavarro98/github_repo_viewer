@@ -7,8 +7,6 @@ interface RepoListView : BaseView {
 
     fun showRepos(repos: List<GithubRepo>)
     fun showNetworkError()
-
     fun showProgress()
-
     fun hideProgress()
 }

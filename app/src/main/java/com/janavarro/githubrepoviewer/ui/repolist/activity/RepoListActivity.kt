@@ -1,10 +1,13 @@
 package com.janavarro.githubrepoviewer.ui.repolist.activity
 
 import android.os.Bundle
+import android.os.Message
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.janavarro.domain.githubrepo.model.GithubRepo
 import com.janavarro.githubrepoviewer.R
 import com.janavarro.githubrepoviewer.databinding.ActivityRepoListBinding
@@ -48,38 +51,23 @@ class RepoListActivity : ComponentActivity(), RepoListView {
         adapter.addItems(repos)
     }
 
-    //TODO: Add a retry button, then we could hide the error
     override fun showNetworkError() {
-        Glide.with(baseContext)
-            .load(R.drawable.network_error)
-            .fitCenter()
-            .into(binding.viewStatus.ivIcon)
-        binding.apply {
-            viewStatus.tvMessage.text = getString(R.string.network_error)
-            viewStatus.tvMessage.visibility = View.VISIBLE
-            viewStatus.root.visibility = View.VISIBLE
-        }
+        loadError(R.drawable.network_error, getString(R.string.network_error))
     }
 
     override fun showGenericError() {
-        Glide.with(baseContext)
-            .load(R.drawable.ic_generic_error)
-            .fitCenter()
-            .into(binding.viewStatus.ivIcon)
-        binding.apply {
-            viewStatus.tvMessage.text = getString(R.string.generic_error)
-            viewStatus.tvMessage.visibility = View.VISIBLE
-            viewStatus.root.visibility = View.VISIBLE
-        }
+        loadError(R.drawable.ic_generic_error, getString(R.string.generic_error))
     }
 
     override fun showProgress() {
         Glide.with(baseContext).asGif()
             .load(R.raw.loading_gif)
-            .into(binding.viewStatus.ivIcon)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
             viewStatus.tvMessage.visibility = View.GONE
             viewStatus.root.visibility = View.VISIBLE
+            viewStatus.root.startAnimation(AnimationUtils.loadAnimation(baseContext, R.anim.fade_in))
         }
     }
 
@@ -87,6 +75,21 @@ class RepoListActivity : ComponentActivity(), RepoListView {
         binding.apply {
             viewStatus.tvMessage.visibility = View.GONE
             viewStatus.root.visibility = View.GONE
+            viewStatus.root.startAnimation(AnimationUtils.loadAnimation(baseContext, R.anim.fade_out))
+
+        }
+    }
+
+    private fun loadError(image: Int, message: String) {
+        Glide.with(baseContext)
+            .load(image)
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .fitCenter()
+            .into(binding.viewStatus.ivInfoIcon)
+        binding.apply {
+            viewStatus.tvMessage.text = message
+            viewStatus.tvMessage.visibility = View.VISIBLE
+            viewStatus.root.visibility = View.VISIBLE
         }
     }
 
@@ -103,6 +106,7 @@ class RepoListActivity : ComponentActivity(), RepoListView {
             )
         )
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
 }
