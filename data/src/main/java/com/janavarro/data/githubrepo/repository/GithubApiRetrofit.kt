@@ -9,7 +9,7 @@ interface GithubApiRetrofit {
 
     @GET("users/{userName}/repos")
     fun getRepos(
-        @Path("userName") username : String?
+            @Path("userName") username: String?
     ): Call<List<ApiGithubRepo>>
 
 }

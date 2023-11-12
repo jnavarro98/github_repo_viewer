@@ -4,10 +4,9 @@ import com.janavarro.data.base.RetrofitClient
 import com.janavarro.domain.base.InteractorResult
 import com.janavarro.domain.githubrepo.mapper.GithubRepoMapper
 import com.janavarro.domain.githubrepo.model.GithubRepo
-import kotlin.jvm.Throws
 
 class GithubListInteractorImpl(
-    private val githubRepoMapper: GithubRepoMapper
+        private val githubRepoMapper: GithubRepoMapper
 ) : GithubListInteractor {
 
     @Throws(Exception::class)

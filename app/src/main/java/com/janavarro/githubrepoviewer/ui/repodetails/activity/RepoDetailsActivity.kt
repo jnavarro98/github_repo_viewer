@@ -23,8 +23,8 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
         const val EXTRA_GITHUB_REPO = "github_repo"
 
         fun newIntent(
-            context: Context,
-            githubRepo: ParcelableGithubRepo
+                context: Context,
+                githubRepo: ParcelableGithubRepo
         ): Intent {
             val intent = Intent(context, RepoDetailsActivity::class.java)
             intent.putExtra(EXTRA_GITHUB_REPO, githubRepo)
@@ -50,24 +50,24 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
         if (githubRepo != null) {
             binding.apply {
                 Glide.with(root.context)
-                    .load(R.drawable.ic_back)
-                    .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .into(btBack)
+                        .load(R.drawable.ic_back)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .into(btBack)
                 tvTitle.text = githubRepo?.name
                 tvDescription.text = githubRepo?.description
                 viewForks.tvValue.text = githubRepo?.forksCount.toString()
                 Glide.with(root.context)
-                    .load(R.drawable.ic_fork)
-                    .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .into(viewForks.ivIcon)
+                        .load(R.drawable.ic_fork)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .into(viewForks.ivIcon)
                 viewStars.tvValue.text = githubRepo?.stars.toString()
                 Glide.with(root.context)
-                    .load(R.drawable.ic_star)
-                    .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .into(viewStars.ivIcon)
+                        .load(R.drawable.ic_star)
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .into(viewStars.ivIcon)
                 if (githubRepo?.language != null) {
                     tvLanguage.text = getString(R.string.repo_language, githubRepo?.language)
                 } else {
@@ -90,9 +90,9 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
                 val builder = CustomTabsIntent.Builder()
                 //Animation only works in some devices (ROM dependent)
                 builder.setStartAnimations(
-                    applicationContext,
-                    R.anim.slide_up_in,
-                    R.anim.slide_down_out
+                        applicationContext,
+                        R.anim.slide_up_in,
+                        R.anim.slide_down_out
                 )
                 val intent = builder.build()
                 intent.launchUrl(this@RepoDetailsActivity, Uri.parse(githubRepo?.url))
@@ -103,17 +103,17 @@ class RepoDetailsActivity : ComponentActivity(), RepoDetailsView {
     private fun getExtras() {
         if (intent.extras != null) {
             githubRepo = intent.getParcelableApiAware(
-                EXTRA_GITHUB_REPO,
-                ParcelableGithubRepo::class.java
+                    EXTRA_GITHUB_REPO,
+                    ParcelableGithubRepo::class.java
             ) as ParcelableGithubRepo
         }
     }
 
     override fun showGenericError() {
         Glide.with(baseContext)
-            .load(R.drawable.ic_generic_error)
-            .fitCenter()
-            .into(binding.viewStatus.ivInfoIcon)
+                .load(R.drawable.ic_generic_error)
+                .fitCenter()
+                .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
             viewStatus.tvMessage.text = getString(R.string.generic_error)
             viewStatus.tvMessage.visibility = View.VISIBLE

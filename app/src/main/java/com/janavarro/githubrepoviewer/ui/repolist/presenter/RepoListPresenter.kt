@@ -11,9 +11,9 @@ import kotlinx.coroutines.withContext
 import java.net.UnknownHostException
 
 class RepoListPresenter(
-    private val githubListInteractor: GithubListInteractor,
-    private val uiDispatcher: CoroutineDispatcher = Dispatchers.Main,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
+        private val githubListInteractor: GithubListInteractor,
+        private val uiDispatcher: CoroutineDispatcher = Dispatchers.Main,
+        private val ioDispatcher: CoroutineDispatcher = Dispatchers.Default,
 ) : BasePresenter<RepoListView>() {
 
     private val uiScope = CoroutineScope(uiDispatcher)
@@ -27,10 +27,11 @@ class RepoListPresenter(
                 response.result?.let { view?.showRepos(it) }
                 view?.hideProgress()
             } else {
-                when(response.exception) {
+                when (response.exception) {
                     is UnknownHostException -> {
                         view?.showNetworkError()
                     }
+
                     else -> view?.showGenericError()
                 }
             }

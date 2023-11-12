@@ -5,10 +5,10 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ParcelableGithubRepo(
-    val name: String?,
-    val description: String?,
-    val stars: Int?,
-    val forksCount: Int?,
-    val language: String?,
-    val url: String?
+        val name: String?,
+        val description: String?,
+        val stars: Int?,
+        val forksCount: Int?,
+        val language: String?,
+        val url: String?
 ) : Parcelable

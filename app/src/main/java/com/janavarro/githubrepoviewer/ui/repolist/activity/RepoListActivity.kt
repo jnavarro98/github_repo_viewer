@@ -1,7 +1,6 @@
 package com.janavarro.githubrepoviewer.ui.repolist.activity
 
 import android.os.Bundle
-import android.os.Message
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.activity.ComponentActivity
@@ -34,12 +33,12 @@ class RepoListActivity : ComponentActivity(), RepoListView {
         setContentView(binding.root)
 
         presenter.view = this
-        initRv()
+        initUI()
         //TODO: Repo could be retrieved from user input
         presenter.getRepoList("google")
     }
 
-    private fun initRv() {
+    private fun initUI() {
         adapter = RepoAdapter(::onItemClick)
         binding.rvRepos.apply {
             adapter = this@RepoListActivity.adapter
@@ -61,9 +60,9 @@ class RepoListActivity : ComponentActivity(), RepoListView {
 
     override fun showProgress() {
         Glide.with(baseContext).asGif()
-            .load(R.raw.loading_gif)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(binding.viewStatus.ivInfoIcon)
+                .load(R.raw.loading_gif)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
             viewStatus.tvMessage.visibility = View.GONE
             viewStatus.root.visibility = View.VISIBLE
@@ -82,10 +81,10 @@ class RepoListActivity : ComponentActivity(), RepoListView {
 
     private fun loadError(image: Int, message: String) {
         Glide.with(baseContext)
-            .load(image)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .fitCenter()
-            .into(binding.viewStatus.ivInfoIcon)
+                .load(image)
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .fitCenter()
+                .into(binding.viewStatus.ivInfoIcon)
         binding.apply {
             viewStatus.tvMessage.text = message
             viewStatus.tvMessage.visibility = View.VISIBLE
@@ -96,14 +95,14 @@ class RepoListActivity : ComponentActivity(), RepoListView {
     //Only using parcelable data class when sending through intent to avoid redundant mapping.
     private fun onItemClick(item: GithubRepo) {
         val intent = RepoDetailsActivity.newIntent(
-            this, ParcelableGithubRepo(
+                this, ParcelableGithubRepo(
                 item.name,
                 item.description,
                 item.stars,
                 item.forksCount,
                 item.language,
                 item.url
-            )
+        )
         )
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)

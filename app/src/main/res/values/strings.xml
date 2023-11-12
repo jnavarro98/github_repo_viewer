@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Github Repo Viewer</string>
-    <string name="bt_open_repo">Visit repo</string>
-    <string name="repo_language">Made with %1$s</string>
-    <string name="network_error">Check internet connection or please try again later</string>
-    <string name="generic_error">Whoops, something went wrong!</string>
+  <string name="app_name">Github Repo Viewer</string>
+  <string name="bt_open_repo">Visit repo</string>
+  <string name="repo_language">Made with %1$s</string>
+  <string name="network_error">Check internet connection or please try again later</string>
+  <string name="generic_error">Whoops, something went wrong!</string>
 </resources>

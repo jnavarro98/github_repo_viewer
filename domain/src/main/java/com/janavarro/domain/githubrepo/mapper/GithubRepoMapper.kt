@@ -9,14 +9,14 @@ class GithubRepoMapper : Mapper<List<ApiGithubRepo>, List<GithubRepo>> {
         val repos = mutableListOf<GithubRepo>()
         apiRepos?.forEach { apiRepo ->
             repos.add(
-                GithubRepo(
-                    apiRepo.name,
-                    apiRepo.description,
-                    apiRepo.stargazersCount,
-                    apiRepo.forksCount,
-                    apiRepo.language,
-                    apiRepo.url
-                )
+                    GithubRepo(
+                            apiRepo.name,
+                            apiRepo.description,
+                            apiRepo.stargazersCount,
+                            apiRepo.forksCount,
+                            apiRepo.language,
+                            apiRepo.url
+                    )
             )
         }
         return repos

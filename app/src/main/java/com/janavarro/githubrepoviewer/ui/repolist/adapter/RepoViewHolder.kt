@@ -9,12 +9,12 @@ import com.janavarro.githubrepoviewer.R
 import com.janavarro.githubrepoviewer.databinding.ViewRepoItemBinding
 
 class RepoViewHolder(
-    private val binding: ViewRepoItemBinding
+        private val binding: ViewRepoItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun onBind(
-        item: GithubRepo,
-        action: (GithubRepo) -> Unit
+            item: GithubRepo,
+            action: (GithubRepo) -> Unit
     ) {
         binding.apply {
             tvTitle.text = item.name
@@ -29,10 +29,10 @@ class RepoViewHolder(
                 action.invoke(item)
             }
             Glide.with(root.context)
-                .load(R.drawable.ic_star)
-                .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(viewStars.ivIcon)
+                    .load(R.drawable.ic_star)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .into(viewStars.ivIcon)
         }
     }
 }

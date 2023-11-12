@@ -9,9 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
-import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.never
 import org.mockito.Mockito.times
@@ -35,9 +35,9 @@ class RepoListPresenterTest {
         openMocks(this)
 
         presenter = RepoListPresenter(
-            mockedGithubListInteractor,
-            Dispatchers.Unconfined,
-            Dispatchers.Unconfined
+                mockedGithubListInteractor,
+                Dispatchers.Unconfined,
+                Dispatchers.Unconfined
         ).apply {
             view = mockedView
         }
@@ -48,19 +48,19 @@ class RepoListPresenterTest {
     fun `get repo list is successful`() = runBlocking {
 
         val mockedSuccessfulResponse = InteractorResult(
-            listOf(
-                GithubRepo(
-                    "name",
-                    "description",
-                    1,
-                    1,
-                    "language",
-                    "url"
+                listOf(
+                        GithubRepo(
+                                "name",
+                                "description",
+                                1,
+                                1,
+                                "language",
+                                "url"
+                        )
                 )
-            )
         )
         `when`(mockedGithubListInteractor.getRepos("username")).thenReturn(
-            mockedSuccessfulResponse
+                mockedSuccessfulResponse
         )
 
         runTest { presenter.getRepoList("username") }
@@ -75,9 +75,9 @@ class RepoListPresenterTest {
     fun `get repo list has network error`() = runBlocking {
 
         val mockedUnsuccessfulResponse =
-            InteractorResult<List<GithubRepo>>(exception = UnknownHostException())
+                InteractorResult<List<GithubRepo>>(exception = UnknownHostException())
         `when`(mockedGithubListInteractor.getRepos("username")).thenReturn(
-            mockedUnsuccessfulResponse
+                mockedUnsuccessfulResponse
         )
 
         runTest { presenter.getRepoList("username") }
@@ -91,9 +91,9 @@ class RepoListPresenterTest {
     fun `get repo list has generic error`() = runBlocking {
 
         val mockedUnsuccessfulResponse =
-            InteractorResult<List<GithubRepo>>(exception = Exception())
+                InteractorResult<List<GithubRepo>>(exception = Exception())
         `when`(mockedGithubListInteractor.getRepos("username")).thenReturn(
-            mockedUnsuccessfulResponse
+                mockedUnsuccessfulResponse
         )
 
         runTest { presenter.getRepoList("username") }

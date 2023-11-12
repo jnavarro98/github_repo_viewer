@@ -7,13 +7,13 @@ import com.janavarro.domain.githubrepo.model.GithubRepo
 import com.janavarro.githubrepoviewer.databinding.ViewRepoItemBinding
 
 class RepoAdapter(
-    private val clickAction: (GithubRepo) -> Unit
+        private val clickAction: (GithubRepo) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val items: MutableList<GithubRepo> = mutableListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding =
-            ViewRepoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ViewRepoItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RepoViewHolder(binding)
     }
 
@@ -21,8 +21,8 @@ class RepoAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as RepoViewHolder).onBind(
-            items[position],
-            clickAction
+                items[position],
+                clickAction
         )
     }
 
